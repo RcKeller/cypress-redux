@@ -1,0 +1,57 @@
+version: 2
+
+defaults: &defaults
+  working_directory: ~/repo
+  docker:
+    - image: cypress/base:10
+
+jobs:
+  test:
+    <<: *defaults  
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "package.json" }}
+          - v1-dependencies-
+      - run: 
+          name: Dependencies
+          command: npm ci
+      - save_cache:
+          key: v1-dependencies-{{ checksum "package.json" }}
+          paths:
+            - ~/.npm
+            - ~/.cache
+      - run:
+          name: Cypress Tests
+          command: $(npm bin)/cypress run
+      - store_artifacts:
+          path: ~/repo/cypress/screenshots
+          when: on_fail
+      - persist_to_workspace:
+          root: ~/repo
+          paths: .
+
+  deploy:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/repo
+      - run:
+          name: Set registry URL
+          command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/repo/.npmrc
+      - run:
+          name: Publish package
+          command: npm publish
+
+workflows:
+  version: 2
+  test-deploy:
+    jobs:
+      - test
+      - deploy:
+          requires:
+            - test
+          filters:
+            tags:
+              only: /^v.*/
