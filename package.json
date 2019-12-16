@@ -14,15 +14,18 @@
   "entry": "index.js",
   "files": [
     "index.js",
-    "await.js",
-    "await.d.ts"
+    "index.d.ts",
+    "registerStore.js",
+    "registerStore.d.ts"
   ],
   "scripts": {
     "test": "cypress run",
     "test:open": "cypress open",
     "validate": "circleci config validate"
   },
-  "dependencies": {},
+  "peerDependencies": {
+    "redux": "^4.0.4"
+  },
   "devDependencies": {
     "cypress": "^3.3.1",
     "eslint": "^5.13.0",

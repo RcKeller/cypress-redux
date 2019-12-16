@@ -1,18 +1,37 @@
+/// <reference path='./index.d.ts' />
 
 /*
 USAGE: in `support/index.(js|ts)`
-import '@rckller/cypress-unfetch'
+import '@rckller/cypress-redux'
 */
-before(() => {
-  // cy.log('Cypress-Unfetch: Polyfill Fetch >>> XHR Fallback')
-  // // Load the standalone polyfill w/ a closure, prevents race
-  // let unfetch
-  // cy.readFile('node_modules/unfetch/dist/unfetch.umd.js')
-  //   .then(file => unfetch = file) // eslint-disable-line no-return-assign
-  // // Then initialize it before the page loads
-  // Cypress.on('window:before:load', (win) => {
-  //   delete win.fetch
-  //   win.eval(unfetch)
-  //   win.fetch = win.unfetch
-  // })
+
+Cypress.Commands.add('store', () => {
+  return cy
+    .log('Redux - Store')
+    .window({ log: false })
+    .its('store')
+})
+
+Cypress.Commands.add('getState', (node) => {
+  return node
+    ? cy
+      .log(`Redux - state[${node}]`)
+      .window({ log: false })
+      .its('store')
+      .invoke('getState')
+      .its(node.toString())
+    : cy
+      .log('Redux - State')
+      .window({ log: false })
+      .its('store')
+      .invoke('getState')
+})
+
+Cypress.Commands.add('dispatch', (action = { type: 'NO_OP' }) => {
+  const { type, ...params } = action
+  return cy
+    .log(`Redux - Dispatch: ${type}`, params)
+    .window({ log: false })
+    .its('store')
+    .invoke('dispatch', action)
 })
