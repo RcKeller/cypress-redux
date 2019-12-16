@@ -1,6 +1,6 @@
 {
   "name": "cypress-redux",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "author": "Ryan Keller",
   "homepage": "https://www.npmjs.com/package/cypress-redux",
   "description": "Unofficial Cypress utilities for testing Redux stores",
