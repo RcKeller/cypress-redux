@@ -24,6 +24,6 @@ registerStore(store)
 Import this library in one of your support files, and you'll be good to go!
 
 ```js
-cypress/support/index.(ts|js)
+// cypress/support/index.(ts|js)
 import 'cypress-redux'
 ```
