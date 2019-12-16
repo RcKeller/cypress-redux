@@ -1,13 +1,13 @@
 {
-  "name": "@rckeller/cypress-redux",
+  "name": "cypress-redux",
   "version": "0.0.1",
   "author": "Ryan Keller",
-  "homepage": "https://www.npmjs.com/package/@rckeller/cypress-redux",
+  "homepage": "https://www.npmjs.com/package/cypress-redux",
   "description": "Unofficial Cypress utilities for testing Redux stores",
   "license": "MIT",
   "keywords": [
     "Cypress",
-    "React",
+    "Redux",
     "Testing",
     "Utils"
   ],
@@ -21,19 +21,23 @@
   "scripts": {
     "test": "cypress run",
     "test:open": "cypress open",
+    "lint": "standard",
     "validate": "circleci config validate"
   },
-  "peerDependencies": {
-    "redux": "^4.0.4"
-  },
   "devDependencies": {
+    "babel-eslint": "^10.0.3",
     "cypress": "^3.3.1",
-    "eslint": "^5.13.0",
-    "eslint-config-standard": "^12.0.0",
-    "eslint-plugin-cypress": "^2.2.0",
-    "eslint-plugin-import": "^2.16.0",
-    "eslint-plugin-node": "^8.0.1",
-    "eslint-plugin-promise": "^4.0.1",
-    "eslint-plugin-standard": "^4.0.0"
+    "eslint-plugin-cypress": "^2.7.0",
+    "redux": "^4.0.4",
+    "standard": "^14.3.1"
+  },
+  "standard": {
+    "env": [
+      "cypress/globals"
+    ],
+    "parser": "babel-eslint",
+    "plugins": [
+      "cypress"
+    ]
   }
 }

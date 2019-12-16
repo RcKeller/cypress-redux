@@ -35,3 +35,11 @@ Cypress.Commands.add('dispatch', (action = { type: 'NO_OP' }) => {
     .its('store')
     .invoke('dispatch', action)
 })
+
+Cypress.Commands.add('subscribe', (callback = (...args) => console.warn('CB:', args)) => {
+  return cy
+    .log('Redux - Subscribe')
+    .window({ log: false })
+    .its('store')
+    .invoke('subscribe', callback)
+})

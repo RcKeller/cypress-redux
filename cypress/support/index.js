@@ -1,2 +1,2 @@
-// import '@rckeller/cypress-redux
+// import 'cypress-redux
 import '../../'

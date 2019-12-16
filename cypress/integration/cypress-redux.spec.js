@@ -1,5 +1,4 @@
-/// <reference path='../../index.d.ts' />
-context('@rckeller/cypress-redux', () => {
+context('cypress-redux', () => {
   beforeEach(() => {
     cy.visit('cypress/pages/index.html')
   })
@@ -35,6 +34,21 @@ context('@rckeller/cypress-redux', () => {
         .dispatch({ type: 'INCREMENT' })
         .getState()
         .should('equal', 1)
+    })
+
+    // Please note, spies are currently NOT supported
+    // This is because callbacks provided to redux's store.subscribe()
+    // execute in a different JS "Sandbox", where your spy
+    // is not registered (and window is not aware of Cypress)
+    it.skip('cy.subscribe()', () => {
+      const test = {
+        callback: () => console.warn('CB')
+      }
+      // const spy = cy.spy(test, 'callback')
+      cy.subscribe(test.callback)
+      cy.get('#increment').click()
+      cy.getState().should('equal', 1)
+      // expect(spy).to.be.called
     })
   })
 
